@@ -1,0 +1,18 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+  <h2>Результаты анализа</h2>
+  <p><strong>Файл:</strong> {{ analysis.pdf_file.name }}</p>
+  <p><strong>Дата загрузки:</strong> {{ analysis.created_at|date:"d.m.Y H:i" }}</p>
+
+  <!-- Содержимое PDF (заглушка) -->
+  <h3>Содержимое PDF:</h3>
+  <p>Здесь будет содержимое загруженного PDF файла.</p>
+
+  <!-- Прогноз (с использованием уровня глюкозы) -->
+  <h3>Прогноз:</h3>
+  <p>{{ prediction }}</p>  <!-- Показываем результат прогноза -->
+
+  <br>
+  <a href="{% url 'app:index' %}">На главную</a>
+{% endblock %}

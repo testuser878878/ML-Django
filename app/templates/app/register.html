@@ -1,0 +1,41 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+  <h2>Регистрация</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <p>
+      {{ form.username.label }}<br>
+      {{ form.username }}<br>
+      {{ form.username.errors }}
+    </p>
+
+    <p>
+      {{ form.email.label }}<br>
+      {{ form.email }}<br>
+      {{ form.email.errors }}
+    </p>
+
+    <p>
+      {{ form.role.label }}<br>
+      {{ form.role }}<br>
+      {{ form.role.errors }}
+    </p>
+
+    <p>
+      {{ form.password1.label }}<br>
+      {{ form.password1 }}<br>
+      {{ form.password1.errors }}
+    </p>
+
+    <p>
+      {{ form.password2.label }}<br>
+      {{ form.password2 }}<br>
+      {{ form.password2.errors }}
+    </p>
+
+    <button type="submit">Зарегистрироваться</button>
+  </form>
+{% endblock %}

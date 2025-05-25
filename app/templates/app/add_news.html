@@ -1,0 +1,25 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+  <h2>Добавить новость</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <p>
+      {{ form.title.label_tag }}<br>
+      {{ form.title }}
+      {{ form.title.errors }}
+    </p>
+    <p>
+      {{ form.content.label_tag }}<br>
+      {{ form.content }}
+      {{ form.content.errors }}
+    </p>
+
+    <button type="submit">Добавить новость</button>
+  </form>
+
+  <br>
+  <a href="{% url 'app:index' %}">На главную</a>
+{% endblock %}

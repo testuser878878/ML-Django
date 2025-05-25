@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Сайт анализов{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        {% if user.is_authenticated %}
+            Привет, {{ user.username }} |
+            <a href="{% url 'app:logout' %}">Выйти</a> |
+            <a href="{% url 'app:profile' %}">Профиль</a>
+        {% else %}
+            <a href="{% url 'app:login' %}">Войти</a> |
+            <a href="{% url 'app:register' %}">Регистрация</a>
+        {% endif %}
+    </nav>
+
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

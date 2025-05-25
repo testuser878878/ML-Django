@@ -1,0 +1,20 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+  <h2>Редактирование профиля</h2>
+
+  <a href="{% url 'app:index' %}">Назад на главную</a>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ profile_form.as_p }}
+    <button type="submit" name="update_profile">Сохранить изменения</button>
+  </form>
+
+  <h3>Изменить пароль</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ password_form.as_p }}
+    <button type="submit" name="change_password">Изменить пароль</button>
+  </form>
+{% endblock %}
