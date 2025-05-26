@@ -3,3 +3,4 @@
 from .user import User
 from .news import News
 from .analysis import Analysis
+

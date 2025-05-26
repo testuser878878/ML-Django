@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, authenticate
-from django.contrib import messages
-from app.forms import UserRegisterForm, UserLoginForm
+from django.contrib.auth import login, logout
+
+from app.forms.user_register_form import UserRegisterForm
+
+from app.forms.user_login_form import UserLoginForm
+
 
 def register_view(request):
     if request.method == 'POST':

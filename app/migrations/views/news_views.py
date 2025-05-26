@@ -1,7 +1,8 @@
 # app/views/news_views.py
 from django.shortcuts import render, redirect
+
+from app.forms.news_form import NewsForm
 from app.models import News
-from app.forms import NewsForm
 from django.contrib.auth.decorators import login_required
 
 def index(request):

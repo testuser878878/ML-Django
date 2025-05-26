@@ -2,6 +2,7 @@
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 
+
 class User(AbstractUser):
     ROLE_CHOICES = (
         ('doctor', 'Doctor'),
@@ -17,7 +18,7 @@ class User(AbstractUser):
         verbose_name='groups',
         related_query_name='user',
     )
-    user_permissions = models.ManyToManyField (
+    user_permissions = models.ManyToManyField(
         Permission,
         related_name='app_user_permissions',
         blank=True,

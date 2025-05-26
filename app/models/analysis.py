@@ -8,3 +8,4 @@ class Analysis(models.Model):
     pdf_file = models.FileField(upload_to='analyses/')
     result = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+

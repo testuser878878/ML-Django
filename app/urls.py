@@ -12,3 +12,4 @@ urlpatterns = [
     path('add_news/', news_views.add_news, name='add_news'),
     path('upload_analysis/', analysis_views.upload_analysis, name='upload_analysis')
 ]
+

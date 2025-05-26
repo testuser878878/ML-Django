@@ -2,7 +2,9 @@ import logging
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-from app.forms import UserProfileForm, PasswordUpdateForm
+
+from app.forms.password_update_form import PasswordUpdateForm
+from app.forms.user_profile_form import UserProfileForm
 
 logger = logging.getLogger(__name__)
 

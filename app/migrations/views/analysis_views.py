@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from app.forms import UploadAnalysisForm
+
+from app.forms.upload_analusics_form import UploadAnalysisForm
 from ml_model.model_module import predict_glucose_level
 
 
