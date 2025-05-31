@@ -99,6 +99,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+
 # Пользовательская модель пользователя, если есть
 AUTH_USER_MODEL = 'app.User'  # Если используешь кастомную модель User
 
