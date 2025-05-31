@@ -1,20 +1,45 @@
 {% extends 'app/base.html' %}
+{% load static %}
+<head>
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% endblock %}
+</head>
 
 {% block content %}
-  <h2>Редактирование профиля</h2>
+<div class="container">
+  <div class="form-container">
+    <h2>Редактирование профиля</h2>
+    <a href="{% url 'app:index' %}" class="btn">На главную</a>
 
-  <a href="{% url 'app:index' %}">Назад на главную</a>
+    <form method="post" style="margin-top: 20px;">
+      {% csrf_token %}
+      {% for field in profile_form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="error-message">{{ field.errors }}</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" name="update_profile" class="btn btn-primary">Сохранить изменения</button>
+    </form>
 
-  <form method="post">
-    {% csrf_token %}
-    {{ profile_form.as_p }}
-    <button type="submit" name="update_profile">Сохранить изменения</button>
-  </form>
-
-  <h3>Изменить пароль</h3>
-  <form method="post">
-    {% csrf_token %}
-    {{ password_form.as_p }}
-    <button type="submit" name="change_password">Изменить пароль</button>
-  </form>
+    <h3 style="margin-top: 30px;">Изменить пароль</h3>
+    <form method="post">
+      {% csrf_token %}
+      {% for field in password_form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="error-message">{{ field.errors }}</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" name="change_password" class="btn btn-primary">Изменить пароль</button>
+    </form>
+  </div>
+</div>
 {% endblock %}

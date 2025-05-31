@@ -1,42 +1,36 @@
 {% extends 'app/base.html' %}
+{% load static %}
+
+<head>
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% endblock %}
+</head>
 
 {% block content %}
-  <h2>Регистрация</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
+<div class="container">
+  <div class="form-container">
+    <h2>Регистрация</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
 
-    <p>
-      {{ form.username.label }}<br>
-      {{ form.username }}<br>
-      {{ form.username.errors }}
-    </p>
+      {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="error-message">{{ field.errors }}</div>
+          {% endif %}
+          {% if field.help_text %}
+            <small class="text-muted">{{ field.help_text }}</small>
+          {% endif %}
+        </div>
+      {% endfor %}
 
-    <p>
-      {{ form.email.label }}<br>
-      {{ form.email }}<br>
-      {{ form.email.errors }}
-    </p>
-
-    <p>
-      {{ form.role.label }}<br>
-      {{ form.role }}<br>
-      {{ form.role.errors }}
-    </p>
-
-    <p>
-      {{ form.password1.label }}<br>
-      {{ form.password1 }}<br>
-      {{ form.password1.errors }}
-    </p>
-
-    <p>
-      {{ form.password2.label }}<br>
-      {{ form.password2 }}<br>
-      {{ form.password2.errors }}
-    </p>
-
-    <button type="submit">Зарегистрироваться</button>
-  </form>
+      <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+      <a href="{% url 'app:login' %}" class="btn" style="margin-left: 10px;">Уже есть аккаунт? Войти</a>
+    </form>
+  </div>
+</div>
 {% endblock %}
-

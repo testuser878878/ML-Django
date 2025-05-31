@@ -11,19 +11,31 @@ def upload_analysis(request):
         form = UploadAnalysisForm(request.POST, request.FILES)
         if form.is_valid():
             analysis = form.save(commit=False)
-            analysis.user = request.user  # Связываем анализ с пользователем
-            analysis.save()
+            analysis.user = request.user
 
-            # Получаем уровень глюкозы и делаем прогноз
-            glucose_level = form.cleaned_data['glucose_level']
-            prediction = predict_glucose_level(glucose_level)  # Получаем прогноз
+            try:
+                # Извлекаем данные из PDF
+                patient_data = form.extract_patient_data(request.FILES['pdf_file'])
 
-            # Добавляем результат прогноза в объект анализа
-            analysis.result = prediction
-            analysis.save()
+                # Проверяем, что glucose_level извлечен (первое значение)
+                if patient_data[0] == 0:
+                    raise ValueError("Не удалось извлечь уровень глюкозы из файла")
 
-            return render(request, 'app/upload_analysis_result.html', {'analysis': analysis, 'prediction': prediction})
+                # Делаем прогноз
+                prediction = predict_glucose_level([patient_data])
 
+                # Сохраняем результаты
+                analysis.result = prediction
+                analysis.save()
+
+                return render(request, 'app/upload_analysis_result.html', {
+                    'analysis': analysis,
+                    'prediction': prediction,
+                    'patient_data': patient_data
+                })
+
+            except Exception as e:
+                form.add_error('pdf_file', f'Ошибка обработки файла: {str(e)}')
     else:
         form = UploadAnalysisForm()
 

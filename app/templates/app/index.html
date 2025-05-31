@@ -1,6 +1,13 @@
 {% extends 'app/base.html' %}
+{% load static %}
+<head>
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% endblock %}
+</head>
 
 {% block content %}
+<div class="container">
   <h1>Новости</h1>
 
   {% if user.is_authenticated and user.role == 'doctor' %}
@@ -9,22 +16,24 @@
     </div>
   {% endif %}
 
-  <ul>
+  <div class="news-list">
     {% for news in news_list %}
-      <li>
-        <strong>{{ news.title }}</strong> — {{ news.created_at|date:"d.m.Y" }}<br>
+      <div class="card">
+        <h3>{{ news.title }}</h3>
+        <small class="text-muted">{{ news.created_at|date:"d.m.Y" }}</small>
         <p>{{ news.content }}</p>
-      </li>
+      </div>
     {% empty %}
-      <li>Новостей пока нет.</li>
+      <div class="card">
+        <p>Новостей пока нет.</p>
+      </div>
     {% endfor %}
-  </ul>
+  </div>
 
-  <br>
-  <!-- Кнопка для загрузки анализа -->
   {% if user.is_authenticated %}
-    <a href="{% url 'app:upload_analysis' %}">Загрузить анализ</a>
+    <a href="{% url 'app:upload_analysis' %}" class="btn btn-secondary" style="margin-top: 20px;">Загрузить анализ</a>
   {% else %}
-    <a href="{% url 'app:login' %}">Войдите, чтобы загрузить анализ</a>
+    <a href="{% url 'app:login' %}" class="btn btn-secondary" style="margin-top: 20px;">Войдите, чтобы загрузить анализ</a>
   {% endif %}
+</div>
 {% endblock %}

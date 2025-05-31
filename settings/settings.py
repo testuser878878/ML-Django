@@ -109,3 +109,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 LOGIN_URL = '/login/'  # Путь, куда перенаправляются незалогиненные пользователи
 
 SECRET_KEY = 'django-insecure-9x*4@#your$secret!key12345$)'
+
