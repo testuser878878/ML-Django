@@ -1,26 +1,39 @@
 {% extends 'app/base.html' %}
+{% load static %}
+<head>
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% endblock %}
+</head>
+
 
 {% block content %}
-  <h2>Добавить новость</h2>
-  <form method="post" novalidate>
-    {% csrf_token %}
-    {{ form.non_field_errors }}
+<div class="container">
+  <div class="form-container">
+    <h2>Добавить новость</h2>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
 
-    <p>
-      {{ form.title.label_tag }}<br>
-      {{ form.title }}
-      {{ form.title.errors }}
-    </p>
-    <p>
-      {{ form.content.label_tag }}<br>
-      {{ form.content }}
-      {{ form.content.errors }}
-    </p>
+      <div class="form-group">
+        <label for="{{ form.title.id_for_label }}">Заголовок:</label>
+        {{ form.title }}
+        {% if form.title.errors %}
+          <div class="error-message">{{ form.title.errors }}</div>
+        {% endif %}
+      </div>
 
-    <button type="submit">Добавить новость</button>
-  </form>
+      <div class="form-group">
+        <label for="{{ form.content.id_for_label }}">Содержание:</label>
+        {{ form.content }}
+        {% if form.content.errors %}
+          <div class="error-message">{{ form.content.errors }}</div>
+        {% endif %}
+      </div>
 
-  <br>
-  <a href="{% url 'app:index' %}">На главную</a>
+      <button type="submit" class="btn btn-primary">Добавить новость</button>
+      <a href="{% url 'app:index' %}" class="btn" style="margin-left: 10px;">На главную</a>
+    </form>
+  </div>
+</div>
 {% endblock %}
-

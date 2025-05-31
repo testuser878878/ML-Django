@@ -1,19 +1,45 @@
 {% extends 'app/base.html' %}
 
+{% load static %}
+
+<head>
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/result.css' %}">
+    {% endblock %}
+</head>
+
 {% block content %}
-  <h2>Результаты анализа</h2>
-  <p><strong>Файл:</strong> {{ analysis.pdf_file.name }}</p>
-  <p><strong>Дата загрузки:</strong> {{ analysis.created_at|date:"d.m.Y H:i" }}</p>
+<div class="result-container">
+  <h2 class="result-title">Результаты анализа</h2>
+  
+  <div class="file-info">
+    <p><strong>Файл:</strong> {{ analysis.pdf_file.name|cut:"analyses/" }}</p>
+    <p><strong>Дата загрузки:</strong> {{ analysis.created_at|date:"d.m.Y H:i" }}</p>
+  </div>
 
-  <!-- Содержимое PDF (заглушка) -->
-  <h3>Содержимое PDF:</h3>
-  <p>Здесь будет содержимое загруженного PDF файла.</p>
+  <div class="prediction-section">
+    <h3>Результат анализа:</h3>
+    <div class="prediction-box {% if prediction == 1 %}positive{% else %}negative{% endif %}">
+      {% if prediction == 1 %}
+        <p>Обнаружены признаки диабета</p>
+      {% else %}
+        <p>Признаки диабета не обнаружены</p>
+      {% endif %}
+    </div>
+    
+    <div class="details">
+      <h4>Извлеченные данные:</h4>
+      <ul>
+        <li>Глюкоза: {{ patient_data.0 }} мг/дл</li>
+        <li>Беременности: {{ patient_data.1 }}</li>
+        <li>ИМТ: {{ patient_data.2 }}</li>
+        <li>Возраст: {{ patient_data.3 }} лет</li>
+        <li>Инсулин: {{ patient_data.4 }} мкЕд/мл</li>
+        <li>Толщина кожи: {{ patient_data.5 }} мм</li>
+      </ul>
+    </div>
+  </div>
 
-  <!-- Прогноз (с использованием уровня глюкозы) -->
-  <h3>Прогноз:</h3>
-  <p>{{ prediction }}</p>  <!-- Показываем результат прогноза -->
-
-  <br>
-  <a href="{% url 'app:index' %}">На главную</a>
+  <a href="{% url 'app:index' %}" class="home-link">На главную</a>
+</div>
 {% endblock %}
-
