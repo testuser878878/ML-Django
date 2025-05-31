@@ -1,11 +1,36 @@
 {% extends 'app/base.html' %}
 
-{% block content %}
-  <h2>Загрузить анализ</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Загрузить PDF</button>
-  </form>
-{% endblock %}
+{% load static %}
 
+<head>
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/upload.css' %}">
+    {% endblock %}
+
+    {% block extra_js %}
+    <script src="{% static 'js/upload.js' %}"></script>
+    {% endblock %}
+</head>
+
+
+{% block content %}
+<div class="upload-container">
+  <h2 class="upload-title">Загрузить медицинский анализ</h2>
+  <form method="post" enctype="multipart/form-data" class="upload-form">
+    {% csrf_token %}
+    
+    <div class="form-group">
+      <label for="id_pdf_file" class="file-label">
+        <span class="file-button">Выберите PDF файл</span>
+        <span class="file-name" id="file-name">Файл не выбран</span>
+        {{ form.pdf_file }}
+      </label>
+      {% if form.pdf_file.errors %}
+        <div class="error-message">{{ form.pdf_file.errors }}</div>
+      {% endif %}
+    </div>
+    
+    <button type="submit" class="submit-button">Анализировать</button>
+  </form>
+</div>
+{% endblock %}
